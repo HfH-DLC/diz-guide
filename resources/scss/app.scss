@@ -1,0 +1,8 @@
+@import "./tailwind-base.scss" layer(tailwind-base);
+
+@import "../../node_modules/@hfh-dlc/hfh-styleguide/dist/style.css"
+    layer(hfh-styleguide);
+
+@import "./local.scss" layer(hfh-styleguide);
+
+@import "./tailwind-utilities.scss" layer(tailwind-utilities);
