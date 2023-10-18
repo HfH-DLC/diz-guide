@@ -2,8 +2,10 @@ export interface ResultData {
     mainCategory: string;
     mediaType: string;
     signatureAndTopic: string;
-    location: {
-        label: string;
-        imageSrc: string;
-    };
+    location: LocationData;
+}
+
+export interface LocationData {
+    label: string;
+    imageSrc: string;
 }

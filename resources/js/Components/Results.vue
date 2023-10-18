@@ -22,6 +22,7 @@
                         <td>
                             <button
                                 class="text-thunderbird-red font-bold hover:underline"
+                                @click="openDialog(result)"
                             >
                                 {{ result.location.label }}
                             </button>
@@ -34,17 +35,29 @@
     <div v-else class="flex-1 flex items-center justify-center text-xl">
         Für Ihre Suche wurden leider keine passenden Resultate gefunden.
     </div>
+    <dialog ref="dialog" class="p-4">
+        <h2>{{ selectedLocation?.label }}</h2>
+    </dialog>
 </template>
 
 <script setup lang="ts">
-import { PropType } from "vue";
-import type { ResultData } from "../types";
+import { PropType, Ref, ref } from "vue";
+import type { LocationData, ResultData } from "../types";
 
 const props = defineProps({
     results: {
         type: Array as PropType<Array<ResultData>>,
     },
 });
+
+const dialog = ref();
+
+const selectedLocation: Ref<LocationData | undefined> = ref();
+
+const openDialog = (result: ResultData) => {
+    selectedLocation.value = result.location;
+    dialog.value.showModal();
+};
 </script>
 
 <style scoped>
