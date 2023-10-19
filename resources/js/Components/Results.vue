@@ -16,12 +16,27 @@
                 </thead>
                 <tbody>
                     <tr v-for="result in results">
-                        <td>{{ result.mainCategory }}</td>
-                        <td>{{ result.signatureAndTopic }}</td>
-                        <td>{{ result.mediaType }}</td>
                         <td>
+                            <span aria-hidden="true" class="hfh-label"
+                                >Hauptkategorie</span
+                            >{{ result.mainCategory }}
+                        </td>
+                        <td>
+                            <span aria-hidden="true" class="hfh-label"
+                                >Signatur und Fachliches Thema</span
+                            >{{ result.signatureAndTopic }}
+                        </td>
+                        <td>
+                            <span aria-hidden="true" class="hfh-label"
+                                >Medienart</span
+                            >{{ result.mediaType }}
+                        </td>
+                        <td>
+                            <span aria-hidden="true" class="hfh-label"
+                                >Aufbewahrungsort</span
+                            >
                             <button
-                                class="text-thunderbird-red font-bold hover:underline"
+                                class="text-thunderbird-red hover:underline"
                                 @click="openDialog(result)"
                             >
                                 {{ result.location.label }}
@@ -36,13 +51,26 @@
         Für Ihre Suche wurden leider keine passenden Resultate gefunden.
     </div>
     <dialog ref="dialog" class="p-4">
-        <h2>{{ selectedLocation?.label }}</h2>
+        <div v-if="selectedLocation">
+            <div class="flex items-start justify-between gap-x-8">
+                <h2 class="text-2xl mb-4">{{ selectedLocation.label }}</h2>
+                <button class="block ml-auto w-5" @click="dialog.close">
+                    <XMarkIcon class="w-5" />
+                </button>
+            </div>
+            <img
+                class="max-w-[75vw]"
+                :src="selectedLocation.imageSrc"
+                :alt="selectedLocation.imageAlt"
+            />
+        </div>
     </dialog>
 </template>
 
 <script setup lang="ts">
 import { PropType, Ref, ref } from "vue";
 import type { LocationData, ResultData } from "../types";
+import { XMarkIcon } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
     results: {
@@ -61,14 +89,59 @@ const openDialog = (result: ResultData) => {
 </script>
 
 <style scoped>
-td,
-th {
-    border: 1px solid black;
-    padding: 0.5rem;
-    @apply text-base;
+table {
+    border-collapse: collapse;
 }
 
 th {
-    @apply font-bold text-left;
+    text-align: left;
+}
+
+th,
+td {
+    border: 1px solid;
+    padding: 1rem;
+}
+
+td .hfh-label {
+    display: none;
+}
+
+@media only screen and (max-width: 600px) {
+    table {
+        display: block;
+    }
+
+    caption,
+    tr,
+    tbody {
+        display: block;
+    }
+
+    thead {
+        position: absolute;
+        left: -10000px;
+        top: auto;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+    }
+
+    tr {
+        margin-bottom: 2rem;
+    }
+
+    td,
+    th {
+        border-bottom: 0;
+        display: block;
+        &:last-child {
+            border-bottom: 1px solid;
+        }
+    }
+
+    td .hfh-label {
+        display: block;
+    }
 }
 </style>
