@@ -8,4 +8,5 @@ export interface ResultData {
 export interface LocationData {
     label: string;
     imageSrc: string;
+    imageAlt: "";
 }
