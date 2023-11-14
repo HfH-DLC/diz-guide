@@ -16,13 +16,13 @@ export default {
         },
         extend: {
             colors: {
-                "fantasy-light": "#fbf3f4",
-                "fantasy-plain": "#f2d1d3",
-                "fantasy-dark": "#d8757c",
-                "gray-dark": "#767676",
-                "gray-light": "#f4f4f4",
-                "thunderbird-red": "#be1925",
-                "thunderbird-red-light": "#e31826",
+                "thunderbird-red": "var(--c-thunderbird-red)",
+                "thunderbird-red-light": "var(--c-thunderbird-red-light)",
+                "fantasy-light": "var(--c-fantasy-light)",
+                "fantasy-dark": "var(--c-fantasy-dark)",
+                "fantasy-plain": "var(--c-fantasy-plain)",
+                "gray-light": "var(--c-gray-light)",
+                "gray-dark": "var(--c-gray-dark)",
             },
             width: {
                 content: "var(--w-content)",

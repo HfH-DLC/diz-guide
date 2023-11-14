@@ -14,6 +14,11 @@ class LocationResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'imageAlt' => $this->image_alt,
+            'imageSrc' => '/storage/images/' . $this->image_src,
+        ];
     }
 }

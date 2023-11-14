@@ -9,7 +9,8 @@
                 <thead>
                     <tr>
                         <th>Hauptkategorie</th>
-                        <th>Signatur und Fachliches Thema</th>
+                        <th>Signatur</th>
+                        <th>Fachliches Thema</th>
                         <th>Medienart</th>
                         <th>Aufbewahrungsort</th>
                     </tr>
@@ -19,12 +20,17 @@
                         <td>
                             <span aria-hidden="true" class="hfh-label"
                                 >Hauptkategorie</span
-                            >{{ result.mainCategory }}
+                            >{{ result.category1 }}
                         </td>
                         <td>
                             <span aria-hidden="true" class="hfh-label"
-                                >Signatur und Fachliches Thema</span
-                            >{{ result.signatureAndTopic }}
+                                >Signatur</span
+                            >{{ result.signature }}
+                        </td>
+                        <td>
+                            <span aria-hidden="true" class="hfh-label"
+                                >Fachliches Thema</span
+                            >{{ result.topic }}
                         </td>
                         <td>
                             <span aria-hidden="true" class="hfh-label"
@@ -69,12 +75,12 @@
 
 <script setup lang="ts">
 import { PropType, Ref, ref } from "vue";
-import type { LocationData, ResultData } from "../types";
+import type { LocationData, ItemData } from "../types";
 import { XMarkIcon } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
     results: {
-        type: Array as PropType<Array<ResultData>>,
+        type: Array as PropType<Array<ItemData>>,
     },
 });
 
@@ -82,7 +88,7 @@ const dialog = ref();
 
 const selectedLocation: Ref<LocationData | undefined> = ref();
 
-const openDialog = (result: ResultData) => {
+const openDialog = (result: ItemData) => {
     selectedLocation.value = result.location;
     dialog.value.showModal();
 };
