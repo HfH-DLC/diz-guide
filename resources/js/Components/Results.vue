@@ -8,7 +8,7 @@
             <table class="w-full">
                 <thead>
                     <tr>
-                        <th>Hauptkategorie</th>
+                        <th>Kategorie</th>
                         <th>Signatur</th>
                         <th>Fachliches Thema</th>
                         <th>Medienart</th>
@@ -19,8 +19,8 @@
                     <tr v-for="result in results">
                         <td>
                             <span aria-hidden="true" class="hfh-label"
-                                >Hauptkategorie</span
-                            >{{ result.category1 }}
+                                >Kategorie</span
+                            >{{ result.category.name }}
                         </td>
                         <td>
                             <span aria-hidden="true" class="hfh-label"
@@ -30,12 +30,12 @@
                         <td>
                             <span aria-hidden="true" class="hfh-label"
                                 >Fachliches Thema</span
-                            >{{ result.topic }}
+                            >{{ result.topic.name }}
                         </td>
                         <td>
                             <span aria-hidden="true" class="hfh-label"
                                 >Medienart</span
-                            >{{ result.mediaType }}
+                            >{{ result.mediaType.name }}
                         </td>
                         <td>
                             <span aria-hidden="true" class="hfh-label"
@@ -45,7 +45,7 @@
                                 class="text-thunderbird-red hover:underline"
                                 @click="openDialog(result)"
                             >
-                                {{ result.location.label }}
+                                {{ result.location.name }}
                             </button>
                         </td>
                     </tr>
