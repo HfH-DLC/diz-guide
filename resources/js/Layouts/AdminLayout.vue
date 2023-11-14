@@ -65,6 +65,10 @@ const navItems = [
         label: "Fachliche Themen",
         href: "/admin/topics",
     },
+    {
+        label: "Einträge",
+        href: "/admin/items",
+    },
 ];
 
 console.log(page.url.value === navItems[0].href);

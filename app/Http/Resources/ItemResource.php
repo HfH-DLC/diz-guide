@@ -15,9 +15,10 @@ class ItemResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'category' => new CategoryResource($this->category),
             'location' => new LocationResource($this->location),
-            'mediaType' => new MediaTypeResource($this->media_type),
+            'mediaType' => new MediaTypeResource($this->mediaType),
             'signature' => $this->signature,
             'topic' => new TopicResource($this->topic),
         ];

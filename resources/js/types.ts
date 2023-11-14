@@ -2,13 +2,17 @@ export interface ItemsResource {
     data: Array<ItemData>;
 }
 
+export interface ItemResource {
+    data: ItemData;
+}
+
 export interface ItemData {
-    topic: string;
+    id: number;
+    topic: TopicData;
     signature: string;
     location: LocationData;
-    mediaType: string;
-    category1: string;
-    category2: string;
+    mediaType: MediaTypeData;
+    category: CategoryData;
 }
 
 export interface CategoriesResource {
