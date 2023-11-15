@@ -220,6 +220,13 @@ const search = () => {
 watch(searchParams, search, { deep: true });
 
 const menuItems = [
+    {
+        label: "Didaktisches Zentrum",
+        link: {
+            href: "https://www.hfh.ch/services/didaktisches-zentrum",
+            target: "_blank",
+        },
+    },
     { label: "hfh.ch", link: { href: "https://hfh.ch", target: "_blank" } },
 ];
 
