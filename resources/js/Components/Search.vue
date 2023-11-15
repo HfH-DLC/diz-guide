@@ -35,7 +35,7 @@ watch(
 );
 
 const search = () => {
-    emit("search", inputValue);
+    emit("search", inputValue.value);
 };
 </script>
 

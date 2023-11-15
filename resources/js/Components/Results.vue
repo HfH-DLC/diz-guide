@@ -30,7 +30,7 @@
                         <td>
                             <span aria-hidden="true" class="hfh-label"
                                 >Fachliches Thema</span
-                            >{{ result.topic.name }}
+                            >{{ result.topic }}
                         </td>
                         <td>
                             <span aria-hidden="true" class="hfh-label"

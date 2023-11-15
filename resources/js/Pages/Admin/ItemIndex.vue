@@ -30,7 +30,7 @@
                             {{ item.location.name }}
                         </td>
                         <td>
-                            {{ item.topic.name }}
+                            {{ item.topic }}
                         </td>
                         <td>
                             {{ item.mediaType.name }}

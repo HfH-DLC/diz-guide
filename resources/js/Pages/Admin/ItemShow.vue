@@ -19,7 +19,7 @@
         </p>
         <h2 class="hfh-label">Fachliches Thema</h2>
         <p>
-            {{ item.topic.name }}
+            {{ item.topic }}
         </p>
         <Link
             :href="`/admin/items/${item.id}/edit`"

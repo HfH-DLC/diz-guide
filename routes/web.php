@@ -4,7 +4,6 @@ use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminItemController;
 use App\Http\Controllers\AdminLocationController;
 use App\Http\Controllers\AdminMediaTypeController;
-use App\Http\Controllers\AdminTopicController;
 use App\Http\Controllers\ItemController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,14 +44,6 @@ Route::prefix('admin')
         Route::get('/media-types/{mediaType}/edit', [AdminMediaTypeController::class, 'edit'])->name('admin.media-type.edit');
         Route::put('/media-types/{mediaType}', [AdminMediaTypeController::class, 'update']);
         Route::delete('/media-types/{mediaType}', [AdminMediaTypeController::class, 'destroy']);
-
-        Route::get('/topics', [AdminTopicController::class, 'index'])->name('admin.topic.index');
-        Route::get('/topics/create', [AdminTopicController::class, 'create'])->name('admin.topic.create');
-        Route::post('/topics', [AdminTopicController::class, 'store']);
-        Route::get('/topics/{topic}', [AdminTopicController::class, 'show'])->name('admin.topic.show');
-        Route::get('/topics/{topic}/edit', [AdminTopicController::class, 'edit'])->name('admin.topic.edit');
-        Route::put('/topics/{topic}', [AdminTopicController::class, 'update']);
-        Route::delete('/topics/{topic}', [AdminTopicController::class, 'destroy']);
 
         Route::get('/items', [AdminItemController::class, 'index'])->name('admin.item.index');
         Route::get('/items/create', [AdminItemController::class, 'create'])->name('admin.item.create');

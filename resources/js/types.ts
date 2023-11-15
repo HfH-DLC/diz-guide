@@ -8,7 +8,7 @@ export interface ItemResource {
 
 export interface ItemData {
     id: number;
-    topic: TopicData;
+    topic: string;
     signature: string;
     location: LocationData;
     mediaType: MediaTypeData;
@@ -67,15 +67,9 @@ export interface MediaTypeData {
     name: string;
 }
 
-export interface TopicsResource {
-    data: Array<TopicData>;
-}
-
-export interface TopicResource {
-    data: TopicData;
-}
-
-export interface TopicData {
-    id: number;
-    name: string;
+export interface SearchParams {
+    search?: string;
+    categoryIds?: Array<string>;
+    locationIds?: Array<string>;
+    mediaTypeIds?: Array<string>;
 }

@@ -62,10 +62,6 @@ const navItems = [
         href: "/admin/media-types",
     },
     {
-        label: "Fachliche Themen",
-        href: "/admin/topics",
-    },
-    {
         label: "Einträge",
         href: "/admin/items",
     },

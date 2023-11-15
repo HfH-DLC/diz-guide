@@ -16,9 +16,42 @@
         <div class="flex items-center flex-col">
             <p>Erkunden Sie das Angebot des DiZ.</p>
             <div class="mt-16 w-full flex justify-center">
-                <Search></Search>
+                <Search
+                    @search="setSearchText"
+                    :searchText="searchText"
+                ></Search>
             </div>
-            <HfhFilterGroup class="mt-8 w-full"></HfhFilterGroup>
+            <HfhFilterGroup
+                class="mt-8 w-full"
+                orientation="vertical"
+                @reset="resetFilters"
+            >
+                <div>
+                    <HfhCheckbox
+                        id="category"
+                        legend="Kategorie"
+                        :options="categoryOptions"
+                        v-model="filter.categoryIds"
+                        orientation="vertical"
+                    ></HfhCheckbox>
+                </div>
+                <div>
+                    <HfhCheckbox
+                        id="media-type"
+                        legend="Medienart"
+                        :options="mediaTypeOptions"
+                        v-model="filter.mediaTypeIds"
+                        orientation="vertical"
+                    ></HfhCheckbox>
+                    <HfhCheckbox
+                        id="location"
+                        legend="Aufbewahrungsort"
+                        :options="locationOptions"
+                        v-model="filter.locationIds"
+                        orientation="vertical"
+                    ></HfhCheckbox>
+                </div>
+            </HfhFilterGroup>
             <div class="mt-16 w-full">
                 <LoadingIndicator v-if="loading" class="mx-auto" />
                 <Results v-else :results="items"></Results>
@@ -82,26 +115,114 @@ import {
     HfhLogo,
     HfhMenu,
     HfhFooter,
+    HfhCheckbox,
 } from "@hfh-dlc/hfh-styleguide";
 import Search from "../Components/Search.vue";
 import LoadingIndicator from "../Components/LoadingIndicator.vue";
 import Results from "../Components/Results.vue";
-import { PropType, computed, ref } from "vue";
-import type { ItemsResource } from "../types";
+import { PropType, computed, ref, watch } from "vue";
+import type {
+    CategoriesResource,
+    ItemsResource,
+    LocationsResource,
+    MediaTypesResource,
+    SearchParams,
+} from "../types";
 import { HfhSocialBlock } from "@hfh-dlc/hfh-styleguide";
+import { router } from "@inertiajs/vue3";
 
 const props = defineProps({
     itemsResource: {
         type: Object as PropType<ItemsResource>,
         required: true,
     },
+    categoriesResource: {
+        type: Object as PropType<CategoriesResource>,
+        required: true,
+    },
+    locationsResource: {
+        type: Object as PropType<LocationsResource>,
+        required: true,
+    },
+    mediaTypesResource: {
+        type: Object as PropType<MediaTypesResource>,
+        required: true,
+    },
 });
 
 const items = computed(() => props.itemsResource.data);
 
+const categoryOptions = computed(() =>
+    props.categoriesResource.data.map((categoryData) => {
+        return {
+            label: categoryData.name,
+            name: `category-${categoryData.id}`,
+            value: categoryData.id,
+        };
+    })
+);
+
+const locationOptions = computed(() =>
+    props.locationsResource.data.map((locationData) => {
+        return {
+            label: locationData.name,
+            name: `location-${locationData.id}`,
+            value: locationData.id,
+        };
+    })
+);
+
+const mediaTypeOptions = computed(() =>
+    props.mediaTypesResource.data.map((mediaTypeData) => {
+        return {
+            label: mediaTypeData.name,
+            name: `media-type-${mediaTypeData.id}`,
+            value: mediaTypeData.id,
+        };
+    })
+);
+
+const query = new URLSearchParams(window.location.search);
+
+const searchText = ref(query.get("search") || "");
+
+const filter = ref({
+    categoryIds: query.getAll("categoryIds[]"),
+    locationIds: query.getAll("locationIds[]"),
+    mediaTypeIds: query.getAll("mediaTypeIds[]"),
+});
+
+const resetFilters = () => {
+    filter.value.categoryIds = [];
+    filter.value.locationIds = [];
+    filter.value.mediaTypeIds = [];
+};
+
+const setSearchText = (value: string) => {
+    searchText.value = value;
+};
+
+const searchParams = computed(() => {
+    const params = { ...filter.value } as Record<string, string | string[]>;
+    if (searchText.value) {
+        params.search = searchText.value;
+    }
+    return params;
+});
+
+const search = () => {
+    router.get("/", searchParams.value, {
+        preserveState: true,
+        preserveScroll: true,
+    });
+};
+
+watch(searchParams, search, { deep: true });
+
 const menuItems = [
     { label: "hfh.ch", link: { href: "https://hfh.ch", target: "_blank" } },
 ];
+
 const loading = ref(false);
 </script>
 

@@ -25,12 +25,11 @@
                 v-model="form.mediaTypeId"
                 :options="mediaTypeOptions"
             ></HfhSelect>
-            <HfhSelect
+            <HfhInput
                 id="item-topics"
                 label="Fachliches Thema"
-                v-model="form.topicId"
-                :options="topicOptions"
-            ></HfhSelect>
+                v-model="form.topic"
+            ></HfhInput>
             <HfhButton type="submit">Eintrag erstellen</HfhButton>
         </form>
     </div>
@@ -41,7 +40,6 @@ import {
     CategoriesResource,
     LocationsResource,
     MediaTypesResource,
-    TopicsResource,
 } from "@/types";
 import { HfhButton, HfhInput, HfhSelect } from "@hfh-dlc/hfh-styleguide";
 import { useForm } from "@inertiajs/vue3";
@@ -58,10 +56,6 @@ const props = defineProps({
     },
     mediaTypesResource: {
         type: Object as PropType<MediaTypesResource>,
-        required: true,
-    },
-    topicsResource: {
-        type: Object as PropType<TopicsResource>,
         required: true,
     },
 });
@@ -93,20 +87,11 @@ const locationOptions = computed(() =>
     })
 );
 
-const topicOptions = computed(() =>
-    props.topicsResource.data.map((topicData) => {
-        return {
-            label: topicData.name,
-            value: topicData.id,
-        };
-    })
-);
-
 const form = useForm({
     categoryId: "",
     locationId: "",
     mediaTypeId: "",
-    topicId: "",
+    topic: "",
     signature: "",
 });
 

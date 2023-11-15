@@ -25,12 +25,11 @@
                 v-model="form.mediaTypeId"
                 :options="mediaTypeOptions"
             ></HfhSelect>
-            <HfhSelect
+            <HfhInput
                 id="item-topics"
                 label="Fachliches Thema"
-                v-model="form.topicId"
-                :options="topicOptions"
-            ></HfhSelect>
+                v-model="form.topic"
+            ></HfhInput>
             <HfhButton type="submit">Speichern</HfhButton>
         </form>
     </div>
@@ -41,7 +40,6 @@ import {
     CategoriesResource,
     LocationsResource,
     MediaTypesResource,
-    TopicsResource,
     ItemResource,
 } from "@/types";
 import { HfhButton, HfhInput, HfhSelect } from "@hfh-dlc/hfh-styleguide";
@@ -63,10 +61,6 @@ const props = defineProps({
     },
     mediaTypesResource: {
         type: Object as PropType<MediaTypesResource>,
-        required: true,
-    },
-    topicsResource: {
-        type: Object as PropType<TopicsResource>,
         required: true,
     },
 });
@@ -100,20 +94,11 @@ const locationOptions = computed(() =>
     })
 );
 
-const topicOptions = computed(() =>
-    props.topicsResource.data.map((topicData) => {
-        return {
-            label: topicData.name,
-            value: topicData.id,
-        };
-    })
-);
-
 const form = useForm({
     categoryId: item.value.category.id,
     locationId: item.value.location.id,
     mediaTypeId: item.value.mediaType.id,
-    topicId: item.value.topic.id,
+    topic: item.value.topic,
     signature: item.value.signature,
 });
 

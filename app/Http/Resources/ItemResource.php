@@ -20,7 +20,7 @@ class ItemResource extends JsonResource
             'location' => new LocationResource($this->location),
             'mediaType' => new MediaTypeResource($this->mediaType),
             'signature' => $this->signature,
-            'topic' => new TopicResource($this->topic),
+            'topic' => $this->topic,
         ];
     }
 }

@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ItemResource;
+use App\Http\Resources\LocationResource;
+use App\Http\Resources\MediaTypeResource;
+use App\Models\Category;
 use App\Models\Item;
+use App\Models\Location;
+use App\Models\MediaType;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class ItemController extends Controller
@@ -16,16 +21,38 @@ class ItemController extends Controller
     public function index(Request $request)
     {
         $validated = $request->validate([
-            'search' => ['string'],
-            'topic' => [Rule::exists('topics')],
-            'location' => [Rule::exists('locations')],
-            'mediaType' => [Rule::exists('media_types')],
-            'category' => [Rule::exists('categories')],
+            'search' => ['nullable', 'string'],
+            'locationIds' =>  ['nullable', 'array'],
+            'locationIds.*' => ['numeric', 'integer'],
+            'mediaTypeIds' => ['nullable', 'array'],
+            'mediaTypeIds.*' => ['numeric', 'integer'],
+            'categoryIds' =>  ['nullable', 'array'],
+            'categoryIds.*' => ['numeric', 'integer'],
         ]);
 
-        $items = Item::all();
+        $query = Item::query();
+        if (isset($validated['search'])) {
+            $search = $validated['search'];
+            $query->where('topic', 'like', "%$search%");
+        }
+        if (isset($validated['categoryIds'])) {
+            $query->whereIn('category_id', $validated['categoryIds']);
+        }
+
+        if (isset($validated['locationIds'])) {
+            $query->whereIn('location_id', $validated['locationIds']);
+        }
+        if (isset($validated['mediaTypeIds'])) {
+            $query->whereIn('media_type_id', $validated['mediaTypeIds']);
+        }
+
+        $items = $query->get();
+
         return Inertia::render("Items", [
             'itemsResource' =>  ItemResource::collection($items),
+            'categoriesResource' => CategoryResource::collection(Category::all()),
+            'locationsResource' => LocationResource::collection(Location::all()),
+            'mediaTypesResource' => MediaTypeResource::collection(MediaType::all()),
         ]);
     }
 }
