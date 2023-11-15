@@ -214,6 +214,7 @@ const search = () => {
     router.get("/", searchParams.value, {
         preserveState: true,
         preserveScroll: true,
+        replace: true,
     });
 };
 
