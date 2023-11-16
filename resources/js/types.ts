@@ -1,3 +1,5 @@
+import { CheckboxOption } from "@hfh-dlc/hfh-styleguide/types/types";
+
 export interface ItemsResource {
     data: Array<ItemData>;
 }
@@ -67,9 +69,11 @@ export interface MediaTypeData {
     name: string;
 }
 
-export interface SearchParams {
-    search?: string;
-    categoryIds?: Array<string>;
-    locationIds?: Array<string>;
-    mediaTypeIds?: Array<string>;
+export interface CheckboxOptionWithChildren {
+    name: string;
+    label: string;
+    value: string;
+    children: NestedCheckboxOption[];
 }
+
+export type NestedCheckboxOption = CheckboxOption | CheckboxOptionWithChildren;

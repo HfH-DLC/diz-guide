@@ -27,13 +27,40 @@
                 @reset="resetFilters"
             >
                 <div>
-                    <HfhCheckbox
-                        id="category"
-                        legend="Kategorie"
-                        :options="categoryOptions"
-                        v-model="filter.categoryIds"
-                        orientation="vertical"
-                    ></HfhCheckbox>
+                    <fieldset>
+                        <legend class="hfh-label">Kategorien</legend>
+                        <div v-for="option in categoryOptions">
+                            <TriStateCheckbox
+                                v-if="hasCategoryChildren(option)"
+                                :id="`${option.name}`"
+                                :label="option.label"
+                                :options="option.children"
+                                :modelValue="getCategoriesChecked(option)"
+                                @update:modelValue="
+                                    (values) =>
+                                        setCategoriesChecked(values, option)
+                                "
+                            >
+                            </TriStateCheckbox>
+                            <div class="flex items-center gap-x-4" v-else>
+                                <input
+                                    class="hfh-checkbox"
+                                    type="checkbox"
+                                    :name="option.name"
+                                    :id="`${option.name}`"
+                                    :checked="isCategoryChecked(option)"
+                                    @change="
+                                    (event: Event) => setCategoryChecked((<HTMLInputElement>event.target).checked, option)
+                                "
+                                />
+                                <label
+                                    class="hfh-checkbox-label"
+                                    :for="`${option.name}`"
+                                    >{{ option.label }}</label
+                                >
+                            </div>
+                        </div>
+                    </fieldset>
                 </div>
                 <div>
                     <HfhCheckbox
@@ -122,14 +149,18 @@ import LoadingIndicator from "../Components/LoadingIndicator.vue";
 import Results from "../Components/Results.vue";
 import { PropType, computed, ref, watch } from "vue";
 import type {
+    CategoryData,
     CategoriesResource,
     ItemsResource,
     LocationsResource,
     MediaTypesResource,
-    SearchParams,
+    NestedCheckboxOption,
+    CheckboxOptionWithChildren,
 } from "../types";
 import { HfhSocialBlock } from "@hfh-dlc/hfh-styleguide";
 import { router } from "@inertiajs/vue3";
+import TriStateCheckbox from "@/Components/TriStateCheckbox.vue";
+import { CheckboxOption } from "@hfh-dlc/hfh-styleguide/types/types";
 
 const props = defineProps({
     itemsResource: {
@@ -153,14 +184,81 @@ const props = defineProps({
 const items = computed(() => props.itemsResource.data);
 
 const categoryOptions = computed(() =>
-    props.categoriesResource.data.map((categoryData) => {
+    props.categoriesResource.data.map((categoryData) =>
+        getCategoryOption(categoryData)
+    )
+);
+
+const getCategoryOption = (
+    categoryData: CategoryData
+): NestedCheckboxOption => {
+    if (categoryData.children.length === 0) {
         return {
             label: categoryData.name,
             name: `category-${categoryData.id}`,
-            value: categoryData.id,
+            value: `${categoryData.id}`,
         };
-    })
-);
+    }
+    return {
+        label: categoryData.name,
+        name: `category-${categoryData.id}`,
+        value: `${categoryData.id}`,
+        children: categoryData.children.map((childData) =>
+            getCategoryOption(childData)
+        ),
+    };
+};
+
+const hasCategoryChildren = (
+    option: NestedCheckboxOption
+): option is CheckboxOptionWithChildren => {
+    return "children" in option && option.children.length > 0;
+};
+
+const getCategoriesChecked = (option: CheckboxOptionWithChildren) => {
+    return getCategoryIds(option).filter((id) =>
+        filter.value.categoryIds.includes(id)
+    );
+};
+
+const getCategoryIds = (option: NestedCheckboxOption) => {
+    const result: Array<string> = [];
+    if (hasCategoryChildren(option)) {
+        option.children.forEach((child) => {
+            result.push(...getCategoryIds(child));
+        });
+    } else {
+        result.push(option.value);
+    }
+    return result;
+};
+
+const isCategoryChecked = (option: CheckboxOption) => {
+    return filter.value.categoryIds.includes(option.value);
+};
+
+const setCategoriesChecked = (
+    categoryIds: Array<string>,
+    option: CheckboxOptionWithChildren
+) => {
+    const ids = getCategoryIds(option);
+    filter.value.categoryIds = filter.value.categoryIds
+        .filter((id) => !ids.includes(id) && id !== option.value)
+        .concat(categoryIds);
+    if (option.children.every((child) => categoryIds.includes(child.value))) {
+        filter.value.categoryIds.push(option.value);
+    }
+};
+
+const setCategoryChecked = (isChecked: boolean, option: CheckboxOption) => {
+    if (isChecked) {
+        filter.value.categoryIds.push(option.value);
+    } else {
+        filter.value.categoryIds = filter.value.categoryIds.filter(
+            (id) => option.value !== id
+        );
+    }
+};
 
 const locationOptions = computed(() =>
     props.locationsResource.data.map((locationData) => {
