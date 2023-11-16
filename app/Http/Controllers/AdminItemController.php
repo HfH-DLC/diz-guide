@@ -44,7 +44,7 @@ class AdminItemController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'categoryId' => ['required', Rule::exists('categories', 'id')],
+            'categoryId' => ['nullable', Rule::exists('categories', 'id')],
             'locationId' => ['required', Rule::exists('locations', 'id')],
             'topic' => ['required', 'string'],
             'mediaTypeId' => ['required', Rule::exists('media_types', 'id')],
@@ -52,7 +52,9 @@ class AdminItemController extends Controller
         ]);
 
         $item = new Item();
-        $item->category_id = $validated['categoryId'];
+        if (isset($validated['categoryId'])) {
+            $item->category_id = $validated['categoryId'];
+        }
         $item->location_id = $validated['locationId'];
         $item->topic = $validated['topic'];
         $item->media_type_id = $validated['mediaTypeId'];
@@ -90,14 +92,16 @@ class AdminItemController extends Controller
     public function update(Request $request, Item $item)
     {
         $validated = $request->validate([
-            'categoryId' => ['required', Rule::exists('categories', 'id')],
+            'categoryId' => ['nullable', Rule::exists('categories', 'id')],
             'locationId' => ['required', Rule::exists('locations', 'id')],
             'topic' => ['required', 'string'],
             'mediaTypeId' => ['required', Rule::exists('media_types', 'id')],
             'signature' => ['required', 'string'],
         ]);
 
-        $item->category_id = $validated['categoryId'];
+        if (isset($validated['categoryId'])) {
+            $item->category_id = $validated['categoryId'];
+        }
         $item->location_id = $validated['locationId'];
         $item->topic = $validated['topic'];
         $item->media_type_id = $validated['mediaTypeId'];

@@ -1,26 +1,29 @@
 <template>
     <div>
         <h1>Eintrag</h1>
-        <h2 class="hfh-label">Kategorie</h2>
-        <p>
-            {{ item.category.name }}
-        </p>
-        <h2 class="hfh-label">Signatur</h2>
-        <p>
-            {{ item.signature }}
-        </p>
-        <h2 class="hfh-label">Aufbewahrungsort</h2>
-        <p>
-            {{ item.location.name }}
-        </p>
-        <h2 class="hfh-label">Medienart</h2>
-        <p>
-            {{ item.mediaType.name }}
-        </p>
-        <h2 class="hfh-label">Fachliches Thema</h2>
-        <p>
-            {{ item.topic }}
-        </p>
+        <dl class="mb-4 grid gap-y-1">
+            <div>
+                <dt class="hfh-label mb-0">Signatur</dt>
+                <dd>{{ item.signature }}</dd>
+            </div>
+            <div>
+                <dt class="hfh-label mb-0">Kategorie</dt>
+                <dd>{{ item.category ? item.category.name : "-" }}</dd>
+            </div>
+
+            <div>
+                <dt class="hfh-label mb-0">Aufbewahrungsort</dt>
+                <dd>{{ item.location.name }}</dd>
+            </div>
+            <div>
+                <dt class="hfh-label mb-0">Medienart</dt>
+                <dd>{{ item.mediaType.name }}</dd>
+            </div>
+            <div>
+                <dt class="hfh-label mb-0">Fachliches Thema</dt>
+                <dd>{{ item.topic }}</dd>
+            </div>
+        </dl>
         <Link
             :href="`/admin/items/${item.id}/edit`"
             class="hfh-button hfh-button--primary hfh-button--icon-arrow mt-4"

@@ -20,7 +20,7 @@
                         <td>
                             <span aria-hidden="true" class="hfh-label"
                                 >Kategorie</span
-                            >{{ result.category.name }}
+                            >{{ result.category ? result.category.name : "-" }}
                         </td>
                         <td>
                             <span aria-hidden="true" class="hfh-label"

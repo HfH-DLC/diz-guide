@@ -21,7 +21,7 @@
                 <tbody>
                     <tr v-for="item in items">
                         <td>
-                            {{ item.category.name }}
+                            {{ item.category ? item.category.name : "-" }}
                         </td>
                         <td>
                             {{ item.signature }}

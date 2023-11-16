@@ -103,7 +103,7 @@ const locationOptions = computed(() =>
 );
 
 const form = useForm({
-    categoryId: item.value.category.id,
+    categoryId: item.value.category?.id || "",
     locationId: item.value.location.id,
     mediaTypeId: item.value.mediaType.id,
     topic: item.value.topic,
