@@ -13,13 +13,11 @@
                 label="Bild"
                 type="file"
                 @input="setFile"
-                required
             ></HfhInput>
             <HfhInput
                 label="Bild Alternativtext"
                 v-model="form.imageAlt"
                 id="location-image-alt"
-                required
             ></HfhInput>
             <HfhButton type="submit">Aufbewahrungsort erstellen</HfhButton>
         </form>
