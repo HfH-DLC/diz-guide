@@ -36,9 +36,10 @@ class ItemController extends Controller
             $query->where('topic', 'like', "%$search%");
         }
         if (isset($validated['categoryIds'])) {
-            $query->whereIn('category_id', $validated['categoryIds'])->orWhere('category_id', null);
+            $query->where(function ($query) use ($validated) {
+                $query->whereIn('category_id', $validated['categoryIds'])->orWhere('category_id', null);
+            });
         }
-
         if (isset($validated['locationIds'])) {
             $query->whereIn('location_id', $validated['locationIds']);
         }
