@@ -7,28 +7,36 @@
                 label="Kategorie"
                 v-model="form.categoryId"
                 :options="categoryOptions"
+                defaultOption="Bitte wählen..."
             ></HfhSelect>
             <HfhInput
                 id="item-signature"
                 label="Signatur"
                 v-model="form.signature"
+                required
             ></HfhInput>
             <HfhSelect
                 id="item-location"
                 label="Aufbewahrungsort"
                 v-model="form.locationId"
                 :options="locationOptions"
+                required
+                defaultOption="Bitte wählen..."
             ></HfhSelect>
             <HfhSelect
                 id="item-media-type"
                 label="Medienart"
                 v-model="form.mediaTypeId"
                 :options="mediaTypeOptions"
+                required
+                defaultOption="Bitte wählen..."
             ></HfhSelect>
             <HfhInput
                 id="item-topics"
                 label="Fachliches Thema"
                 v-model="form.topic"
+                required
+                defaultOption="Bitte wählen..."
             ></HfhInput>
             <HfhButton type="submit">Speichern</HfhButton>
         </form>
