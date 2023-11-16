@@ -61,4 +61,4 @@ Route::prefix('admin')
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
-Route::get('/', [ItemController::class, 'index'])->name('items.index');
+Route::get('/', [ItemController::class, 'index'])->name('items.index')->middleware('auth');
