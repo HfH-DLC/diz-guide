@@ -14,7 +14,7 @@ export interface ItemData {
     signature: string;
     location: LocationData;
     mediaType: MediaTypeData;
-    category: CategoryData;
+    category?: CategoryData;
 }
 
 export interface CategoriesResource {

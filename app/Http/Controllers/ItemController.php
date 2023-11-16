@@ -47,7 +47,7 @@ class ItemController extends Controller
             $query->whereIn('media_type_id', $validated['mediaTypeIds']);
         }
 
-        $items = $query->get();
+        $items = $query->with('category.parent')->get();
 
         return Inertia::render("Items", [
             'itemsResource' =>  ItemResource::collection($items),

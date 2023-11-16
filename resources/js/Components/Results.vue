@@ -20,7 +20,7 @@
                         <td>
                             <span aria-hidden="true" class="hfh-label"
                                 >Kategorie</span
-                            >{{ result.category ? result.category.name : "-" }}
+                            >{{ getCategoryString(result) }}
                         </td>
                         <td>
                             <span aria-hidden="true" class="hfh-label"
@@ -91,6 +91,20 @@ const selectedLocation: Ref<LocationData | undefined> = ref();
 const openDialog = (result: ItemData) => {
     selectedLocation.value = result.location;
     dialog.value.showModal();
+};
+
+const getCategoryString = (item: ItemData) => {
+    let categoryString = "";
+    if (item.category?.parent) {
+        categoryString = item.category?.parent?.name + ", ";
+    }
+    if (item.category) {
+        categoryString += item.category.name;
+    }
+    if (categoryString === "") {
+        categoryString = "-";
+    }
+    return categoryString;
 };
 </script>
 
