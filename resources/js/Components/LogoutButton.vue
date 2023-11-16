@@ -1,6 +1,6 @@
 <template>
     <button
-        class="text-base leading-none flex items-center gap-x-1 hover:text-thunderbird"
+        class="text-base leading-none flex items-center gap-x-1 hover:text-thunderbird-red"
         @click="logout"
     >
         <ArrowLeftOnRectangleIcon class="w-5"></ArrowLeftOnRectangleIcon>
