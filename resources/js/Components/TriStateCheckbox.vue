@@ -41,18 +41,23 @@
         class="checkboxes ml-9"
         :hidden="!displaySubCategories"
     >
-        <li v-for="option in options" class="hfh-tri-state-checkbox-option">
-            <input
-                class="hfh-checkbox"
-                type="checkbox"
-                :id="getOptionId(option)"
-                :name="option.name"
-                :value="option.value"
-                :checked="model.includes(option.value)"
-                @change="
+        <li
+            v-for="option in options"
+            class="hfh-tri-state-checkbox-option flex items-start"
+        >
+            <div class="flex items-center min-h-[2rem]">
+                <input
+                    class="hfh-checkbox"
+                    type="checkbox"
+                    :id="getOptionId(option)"
+                    :name="option.name"
+                    :value="option.value"
+                    :checked="model.includes(option.value)"
+                    @change="
                      (event: Event) => setCheckboxValue((<HTMLInputElement>event.target).checked, option)
                 "
-            />
+                />
+            </div>
             <label class="hfh-checkbox-label" :for="getOptionId(option)">{{
                 option.label
             }}</label>
@@ -153,7 +158,7 @@ const toggle = () => {
 <style scoped lang="scss">
 .hfh-tri-state-checkbox-option {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     column-gap: 1rem;
 }
 
