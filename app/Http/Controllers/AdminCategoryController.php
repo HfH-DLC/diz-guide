@@ -26,7 +26,7 @@ class AdminCategoryController extends Controller
     public function create()
     {
         return Inertia::render('Admin/CategoryCreate', [
-            'categoriesResource' => CategoryResource::collection(Category::all())
+            'categoriesResource' => CategoryResource::collection(Category::where('parent_id', null)->orderBy('name')->get())
         ]);
     }
 
@@ -67,7 +67,7 @@ class AdminCategoryController extends Controller
         $category->load('parent');
         return Inertia::render('Admin/CategoryEdit', [
             'categoryResource' => new CategoryResource($category),
-            'categoriesResource' => CategoryResource::collection(Category::whereNot('id', $category->id)->get()),
+            'categoriesResource' => CategoryResource::collection(Category::whereNot('id', $category->id)->where('parent_id', null)->get()),
         ]);
     }
 
