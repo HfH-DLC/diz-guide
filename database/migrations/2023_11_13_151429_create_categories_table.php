@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')->references('id')->on('categories');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }
