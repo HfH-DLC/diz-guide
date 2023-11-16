@@ -13,7 +13,7 @@ import { ArrowLeftOnRectangleIcon } from "@heroicons/vue/24/outline";
 import { router } from "@inertiajs/vue3";
 
 const logout = () => {
-    router.post("/auth/logout");
+    router.post("/admin/logout");
 };
 </script>
 

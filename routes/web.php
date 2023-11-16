@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminItemController;
 use App\Http\Controllers\AdminLocationController;
 use App\Http\Controllers\AdminMediaTypeController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ItemController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,8 +20,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('admin')
-    // ->middleware('auth')
+    ->middleware('auth')
     ->group(function () {
+        Route::post('/logout', [AuthController::class, 'logout']);
+
+        Route::get('/', fn () => to_route('admin.item.index'));
+
         Route::get('/categories', [AdminCategoryController::class, 'index'])->name('admin.category.index');
         Route::get('/categories/create', [AdminCategoryController::class, 'create'])->name('admin.category.create');
         Route::post('/categories', [AdminCategoryController::class, 'store']);
@@ -54,4 +59,6 @@ Route::prefix('admin')
         Route::delete('/items/{item}', [AdminItemController::class, 'destroy']);
     });
 
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
 Route::get('/', [ItemController::class, 'index'])->name('items.index');
