@@ -32,9 +32,9 @@ class AdminItemController extends Controller
     public function create()
     {
         return Inertia::render('Admin/ItemCreate', [
-            'categoriesResource' => CategoryResource::collection(Category::all()),
-            'locationsResource' => LocationResource::collection(Location::all()),
-            'mediaTypesResource' => MediaTypeResource::collection(MediaType::all()),
+            'categoriesResource' => CategoryResource::collection(Category::orderBy('name')->get()),
+            'locationsResource' => LocationResource::collection(Location::orderBy('name')->get()),
+            'mediaTypesResource' => MediaTypeResource::collection(MediaType::orderBy('name')->get()),
         ]);
     }
 
@@ -80,9 +80,9 @@ class AdminItemController extends Controller
     {
         return Inertia::render('Admin/ItemEdit', [
             'itemResource' => new ItemResource($item),
-            'categoriesResource' => CategoryResource::collection(Category::all()),
-            'locationsResource' => LocationResource::collection(Location::all()),
-            'mediaTypesResource' => MediaTypeResource::collection(MediaType::all()),
+            'categoriesResource' => CategoryResource::collection(Category::orderBy('name')->get()),
+            'locationsResource' => LocationResource::collection(Location::orderBy('name')->get()),
+            'mediaTypesResource' => MediaTypeResource::collection(MediaType::orderBy('name')->get()),
         ]);
     }
 
