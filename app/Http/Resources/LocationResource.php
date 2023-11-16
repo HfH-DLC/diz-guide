@@ -18,7 +18,7 @@ class LocationResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'imageAlt' => $this->image_alt,
-            'imageSrc' => '/storage/images/' . $this->image_src,
+            'imageSrc' => $this->image_src ? '/storage/images/' . $this->image_src : null,
         ];
     }
 }

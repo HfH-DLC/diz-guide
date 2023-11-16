@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->string('image_src');
-            $table->string('image_alt');
+            $table->string('image_src')->nullable();
+            $table->string('image_alt')->nullable();
             $table->timestamps();
         });
     }

@@ -36,18 +36,21 @@ class AdminLocationController extends Controller
 
         $validated = $request->validate([
             'name' => ['required', 'string'],
-            'image' => ['required', 'image', 'mimes:jpeg,png,jpg'],
-            'imageAlt' =>  ['required', 'string'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg'],
+            'imageAlt' =>  ['nullable', 'string'],
         ]);
-
-        $fileName = time() . '.' . $request->image->extension();
-
-        $request->image->storeAs('public/images', $fileName);
 
         $location = new Location();
         $location->name = $validated['name'];
-        $location->image_src = $fileName;
-        $location->image_alt = $validated['imageAlt'];
+
+        if (isset($validated['image'])) {
+            $fileName = time() . '.' . $request->image->extension();
+            $request->image->storeAs('public/images', $fileName);
+            $location->image_src = $fileName;
+        }
+        if (isset($validated['imageAlt'])) {
+            $location->image_alt = $validated['imageAlt'];
+        }
         $location->save();
         return to_route('admin.location.show', ['location' => $location]);
     }
@@ -81,16 +84,18 @@ class AdminLocationController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string'],
             'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg'],
-            'imageAlt' =>  ['required', 'string'],
+            'imageAlt' =>  ['nullable', 'string'],
         ]);
-        if ($request->image) {
+
+        $location->name = $validated['name'];
+        if (isset($validated['image'])) {
             $fileName = time() . '.' . $request->image->extension();
             $request->image->storeAs('public/images', $fileName);
             $location->image_src = $fileName;
         }
-
-        $location->name = $validated['name'];
-        $location->image_alt = $validated['imageAlt'];
+        if (isset($validated['imageAlt'])) {
+            $location->image_alt = $validated['imageAlt'];
+        }
         $location->save();
         return to_route('admin.location.show', ['location' => $location]);
     }

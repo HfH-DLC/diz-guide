@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('signature');
             $table->foreignId('location_id')->constrained();
             $table->foreignId('media_type_id')->constrained();
-            $table->foreignId('category_id')->constrained()->nullable();
+            $table->foreignId('category_id')->nullable()->constrained();
             $table->timestamps();
         });
     }

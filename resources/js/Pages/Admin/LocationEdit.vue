@@ -23,7 +23,6 @@
                 label="Bild Alternativtext"
                 v-model="form.imageAlt"
                 id="location-image-alt"
-                required
             ></HfhInput>
             <HfhButton type="submit">Speichern</HfhButton>
         </form>
