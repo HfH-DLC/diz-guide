@@ -17,7 +17,7 @@
                     {{ item.label }}</Link
                 >
             </nav>
-            <UserMenu></UserMenu>
+            <LogoutButton class="mr-4"></LogoutButton>
         </div>
         <div class="p-4" v-if="breadcrumbs">
             <HfhBreadcrumbs :breadcrumbs="breadcrumbs"></HfhBreadcrumbs>
@@ -33,7 +33,7 @@ import { PropType } from "vue";
 import { HfhBreadcrumbs, HfhLogo } from "@hfh-dlc/hfh-styleguide";
 import type { Breadcrumb } from "@hfh-dlc/hfh-styleguide/types/types";
 import { Link, usePage } from "@inertiajs/vue3";
-import UserMenu from "@/Components/UserMenu.vue";
+import LogoutButton from "@/Components/LogoutButton.vue";
 
 defineProps({
     breadcrumbs: {
@@ -50,6 +50,10 @@ const itemActiveClasses =
 
 const navItems = [
     {
+        label: "Einträge",
+        href: "/admin/items",
+    },
+    {
         label: "Kategorien",
         href: "/admin/categories",
     },
@@ -61,13 +65,7 @@ const navItems = [
         label: "Medienarten",
         href: "/admin/media-types",
     },
-    {
-        label: "Einträge",
-        href: "/admin/items",
-    },
 ];
-
-console.log(page.url.value === navItems[0].href);
 </script>
 
 <style lang="scss" scoped></style>
