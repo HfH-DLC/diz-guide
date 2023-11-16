@@ -70,6 +70,8 @@
                         v-model="filter.mediaTypeIds"
                         orientation="vertical"
                     ></HfhCheckbox>
+                </div>
+                <div>
                     <HfhCheckbox
                         id="location"
                         legend="Aufbewahrungsort"
