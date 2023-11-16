@@ -70,7 +70,7 @@ class ImportItems extends Command
                 $category->save();
                 $categoryMappings[$categoryName] = $category->id;
             }
-            if ($subCategoryName && !isset($categoryMappings[$subCategoryName])) {
+            if ($subCategoryName != 'Alle Kategorien (wenn möglich nicht nutzen)' && $subCategoryName && !isset($categoryMappings[$subCategoryName])) {
                 $this->info($categoryName . "=>" . $subCategoryName);
                 $this->info("Creating category $subCategoryName as subcategory of $categoryName");
                 $subcategory = new Category();
@@ -145,7 +145,7 @@ class ImportItems extends Command
             $item->signature = $signature;
             $item->location_id = $location->id;
             $item->media_type_id = $mediaType->id;
-            if ($data[5]) {
+            if ($data[5] &&  $data[5] != 'Alle Kategorien (wenn möglich nicht nutzen)') {
                 $subcategory = Category::where('name', $data[5])->firstOrFail();
                 $item->category_id = $subcategory->id;
             } else {
