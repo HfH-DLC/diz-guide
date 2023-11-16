@@ -50,7 +50,7 @@ class ItemController extends Controller
 
         return Inertia::render("Items", [
             'itemsResource' =>  ItemResource::collection($items),
-            'categoriesResource' => CategoryResource::collection(Category::all()),
+            'categoriesResource' => CategoryResource::collection(Category::where('parent_id', null)->orderBy('name')->get()),
             'locationsResource' => LocationResource::collection(Location::all()),
             'mediaTypesResource' => MediaTypeResource::collection(MediaType::all()),
         ]);
