@@ -8,7 +8,7 @@
         <div class="mx-4 xl:max-w-container xl:mx-auto">
             <div class="inline-flex gap-x-4 mt-12 mb-12 items-center">
                 <HfhLogo />
-                <h1 class="text-2xl mb-[3px]">DiZ Guide</h1>
+                <h1 class="text-2xl mb-[3px]">DiZ-Guide</h1>
             </div>
         </div>
     </header>
