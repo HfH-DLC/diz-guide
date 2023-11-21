@@ -26,9 +26,6 @@
             ></HfhInput>
             <HfhButton type="submit">Speichern</HfhButton>
         </form>
-        {{ form.name }}
-        {{ form.image }}
-        {{ form.imageAlt }}
     </div>
 </template>
 
