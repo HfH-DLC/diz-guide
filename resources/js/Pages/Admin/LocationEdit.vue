@@ -26,13 +26,16 @@
             ></HfhInput>
             <HfhButton type="submit">Speichern</HfhButton>
         </form>
+        {{ form.name }}
+        {{ form.image }}
+        {{ form.imageAlt }}
     </div>
 </template>
 
 <script setup lang="ts">
 import { LocationResource } from "@/types";
 import { HfhButton, HfhInput } from "@hfh-dlc/hfh-styleguide";
-import { useForm } from "@inertiajs/vue3";
+import { router, useForm } from "@inertiajs/vue3";
 import { PropType, computed } from "vue";
 
 const props = defineProps({
@@ -58,7 +61,10 @@ const setFile = (event: Event) => {
 };
 
 const submit = () => {
-    form.put(`/admin/locations/${location.value.id}`);
+    router.post(`/admin/locations/${location.value.id}`, {
+        _method: "put",
+        ...form.data(),
+    });
 };
 </script>
 
