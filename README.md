@@ -38,6 +38,8 @@ To run the js tests, use `npm run test`.
 
 6. Run the `php artisan storage:link` command to allow for the necessary storage access.
 
+7. For file uploads ensure that the tmp folder exists and is writable (currently at /home/www/diz_guide/tmp).
+
 ## User Creation
 
 All users have access to the admin panel at `/admin`. In order to create a new user, run the `php artisan app:create-user` command.
