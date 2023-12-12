@@ -29,7 +29,7 @@ export interface CategoryData {
     id: number;
     name: string;
     parent?: CategoryData;
-    children: Array<CategoryData>;
+    children?: Array<CategoryData>;
 }
 
 export interface UserResource {

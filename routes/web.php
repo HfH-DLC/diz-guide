@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminItemController;
 use App\Http\Controllers\AdminLocationController;
 use App\Http\Controllers\AdminMediaTypeController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
 use Illuminate\Support\Facades\Route;
@@ -64,3 +65,5 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/', [HomeController::class, 'show']);
+
+Route::get('/kategorien', [CategoryController::class, 'index']);

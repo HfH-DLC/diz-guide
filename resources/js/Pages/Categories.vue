@@ -1,90 +1,84 @@
 <template>
     <header>
-        <HfhHeaderBar>
-            <template v-slot:right>
-                <HfhMenu :items="menuItems" variant="tertiary" />
-            </template>
-        </HfhHeaderBar>
-        <div class="mx-4 xl:max-w-container xl:mx-auto">
-            <div class="inline-flex gap-x-4 mt-12 mb-12 items-center">
-                <HfhLogo />
-                <h1 class="text-2xl mb-[3px]">DiZ-Guide</h1>
-            </div>
-        </div>
+        <HfhHeader
+            :primaryItems="primaryMenuItems"
+            :tertiaryItems="tertiaryMenuItems"
+        ></HfhHeader>
     </header>
-    <main class="mx-4 xl:max-w-container xl:mx-auto pb-20">
-        <div class="flex items-center flex-col">
-            <p>Erkunden Sie das Angebot des DiZ.</p>
-            <div class="mt-16 w-full flex justify-center">
-                <Search
-                    @search="setSearchText"
-                    :searchText="searchText"
-                ></Search>
-            </div>
-            <HfhFilterGroup
-                class="mt-8 w-full"
-                orientation="vertical"
-                @reset="resetFilters"
-            >
-                <div>
-                    <fieldset>
-                        <legend class="hfh-label">Kategorien</legend>
-                        <div v-for="option in categoryOptions">
-                            <TriStateCheckbox
-                                v-if="hasCategoryChildren(option)"
-                                :id="`${option.name}`"
-                                :label="option.label"
-                                :options="option.children"
-                                :modelValue="getCategoriesChecked(option)"
-                                @update:modelValue="
-                                    (values) =>
-                                        setCategoriesChecked(values, option)
-                                "
-                            >
-                            </TriStateCheckbox>
-                            <div class="flex items-center gap-x-4" v-else>
-                                <input
-                                    class="hfh-checkbox"
-                                    type="checkbox"
-                                    :name="option.name"
+    <main class="mx-4 xl:max-w-container xl:mx-auto pb-20 mt-3 lg:mt-20">
+        <p>
+            Wählen Sie Kategorien aus und klicken Sie auf Suchen. Unter Sprache
+            hat es weitere Kategorien.
+        </p>
+        <form
+            @submit.prevent="search"
+            class="mt-8 bg-fantasy-light w-full pt-6 pb-6 pl-10 pr-5"
+        >
+            <div class="flex flex-wrap gap-x-12 gap-y-4">
+                <div class="hfh-label flex-shrink-0">Suchen nach</div>
+                <div class="flex flex-wrap gap-x-6 gap-y-4 flex-1">
+                    <div class="flex-1">
+                        <fieldset>
+                            <legend class="hfh-label">Kategorien</legend>
+                            <div v-for="option in categoryOptions">
+                                <TriStateCheckbox
+                                    v-if="hasCategoryChildren(option)"
                                     :id="`${option.name}`"
-                                    :checked="isCategoryChecked(option)"
-                                    @change="
+                                    :label="option.label"
+                                    :options="option.children"
+                                    :modelValue="getCategoriesChecked(option)"
+                                    @update:modelValue="
+                                        (values) =>
+                                            setCategoriesChecked(values, option)
+                                    "
+                                >
+                                </TriStateCheckbox>
+                                <div class="flex items-center gap-x-4" v-else>
+                                    <input
+                                        class="hfh-checkbox"
+                                        type="checkbox"
+                                        :name="option.name"
+                                        :id="`${option.name}`"
+                                        :checked="isCategoryChecked(option)"
+                                        @change="
                                     (event: Event) => setCategoryChecked((<HTMLInputElement>event.target).checked, option)
                                 "
-                                />
-                                <label
-                                    class="hfh-checkbox-label"
-                                    :for="`${option.name}`"
-                                    >{{ option.label }}</label
-                                >
+                                    />
+                                    <label
+                                        class="hfh-checkbox-label"
+                                        :for="`${option.name}`"
+                                        >{{ option.label }}</label
+                                    >
+                                </div>
                             </div>
-                        </div>
-                    </fieldset>
+                        </fieldset>
+                    </div>
+                    <div class="flex-1">
+                        <HfhCheckbox
+                            id="media-type"
+                            legend="Medienart"
+                            :options="mediaTypeOptions"
+                            v-model="filter.mediaTypeIds"
+                            orientation="vertical"
+                        ></HfhCheckbox>
+                    </div>
                 </div>
-                <div>
-                    <HfhCheckbox
-                        id="media-type"
-                        legend="Medienart"
-                        :options="mediaTypeOptions"
-                        v-model="filter.mediaTypeIds"
-                        orientation="vertical"
-                    ></HfhCheckbox>
-                </div>
-                <div>
-                    <HfhCheckbox
-                        id="location"
-                        legend="Aufbewahrungsort"
-                        :options="locationOptions"
-                        v-model="filter.locationIds"
-                        orientation="vertical"
-                    ></HfhCheckbox>
-                </div>
-            </HfhFilterGroup>
-            <div class="mt-16 w-full">
-                <LoadingIndicator v-if="loading" class="mx-auto" />
-                <Results v-else :results="items"></Results>
             </div>
+            <ul v-if="errors" class="my-8">
+                <li v-for="error in errors" class="text-base">
+                    {{ error.message }}
+                </li>
+            </ul>
+            <div class="mt-8 flex flex-wrap gap-x-8 gap-y-4">
+                <HfhButton type="submit" :animated="true">Suchen</HfhButton>
+                <HfhButton :animated="true" :primary="false" @click="reset"
+                    >Zurücksetzen</HfhButton
+                >
+            </div>
+        </form>
+        <div class="mt-16 w-full">
+            <LoadingIndicator v-if="loading" class="mx-auto" />
+            <Results v-else-if="displayResults" :results="items"></Results>
         </div>
     </main>
     <footer>
@@ -139,22 +133,18 @@
 
 <script setup lang="ts">
 import {
-    HfhFilterGroup,
-    HfhHeaderBar,
-    HfhLogo,
-    HfhMenu,
+    HfhHeader,
     HfhFooter,
     HfhCheckbox,
+    HfhButton,
 } from "@hfh-dlc/hfh-styleguide";
-import Search from "../Components/Search.vue";
 import LoadingIndicator from "../Components/LoadingIndicator.vue";
 import Results from "../Components/Results.vue";
-import { PropType, computed, ref, watch } from "vue";
+import { PropType, Ref, computed, ref } from "vue";
 import type {
     CategoryData,
     CategoriesResource,
     ItemsResource,
-    LocationsResource,
     MediaTypesResource,
     NestedCheckboxOption,
     CheckboxOptionWithChildren,
@@ -171,10 +161,6 @@ const props = defineProps({
     },
     categoriesResource: {
         type: Object as PropType<CategoriesResource>,
-        required: true,
-    },
-    locationsResource: {
-        type: Object as PropType<LocationsResource>,
         required: true,
     },
     mediaTypesResource: {
@@ -194,7 +180,7 @@ const categoryOptions = computed(() =>
 const getCategoryOption = (
     categoryData: CategoryData
 ): NestedCheckboxOption => {
-    if (categoryData.children.length === 0) {
+    if (!categoryData.children || categoryData.children.length === 0) {
         return {
             label: categoryData.name,
             name: `category-${categoryData.id}`,
@@ -262,16 +248,6 @@ const setCategoryChecked = (isChecked: boolean, option: CheckboxOption) => {
     }
 };
 
-const locationOptions = computed(() =>
-    props.locationsResource.data.map((locationData) => {
-        return {
-            label: locationData.name,
-            name: `location-${locationData.id}`,
-            value: locationData.id,
-        };
-    })
-);
-
 const mediaTypeOptions = computed(() =>
     props.mediaTypesResource.data.map((mediaTypeData) => {
         return {
@@ -283,44 +259,102 @@ const mediaTypeOptions = computed(() =>
 );
 
 const query = new URLSearchParams(window.location.search);
-
-const searchText = ref(query.get("search") || "");
+const mediaTypeIds = query.getAll("mediaTypeIds[]");
+const categoryIds = query.getAll("categoryIds[]");
 
 const filter = ref({
-    categoryIds: query.getAll("categoryIds[]"),
-    locationIds: query.getAll("locationIds[]"),
-    mediaTypeIds: query.getAll("mediaTypeIds[]"),
+    categoryIds: categoryIds,
+    mediaTypeIds:
+        mediaTypeIds.length > 0
+            ? mediaTypeIds
+            : mediaTypeOptions.value.map((option) => option.value),
 });
 
-const resetFilters = () => {
-    filter.value.categoryIds = [];
-    filter.value.locationIds = [];
-    filter.value.mediaTypeIds = [];
-};
+const displayResults = computed(
+    () => mediaTypeIds.length > 0 || categoryIds.length > 0
+);
 
-const setSearchText = (value: string) => {
-    searchText.value = value;
-};
-
-const searchParams = computed(() => {
-    const params = { ...filter.value } as Record<string, string | string[]>;
-    if (searchText.value) {
-        params.search = searchText.value;
-    }
-    return params;
-});
+const errors: Ref<Array<{ message: string }>> = ref([]);
 
 const search = () => {
-    router.get("/", searchParams.value, {
-        preserveState: true,
+    errors.value = [];
+    if (filter.value.categoryIds.length == 0) {
+        errors.value.push({
+            message: "Bitte wählen Sie mindestens eine Kategorie aus.",
+        });
+    }
+    if (filter.value.mediaTypeIds.length == 0) {
+        errors.value.push({
+            message: "Bitte wählen Sie mindestens eine Medienart aus.",
+        });
+    }
+    if (errors.value.length > 0) {
+        return;
+    }
+    router.get("/kategorien", filter.value, {
+        preserveState: false,
         preserveScroll: true,
         replace: true,
     });
 };
 
-watch(searchParams, search, { deep: true });
+const reset = () => {
+    router.get(
+        "/kategorien",
+        {},
+        {
+            preserveState: false,
+            preserveScroll: false,
+            replace: true,
+        }
+    );
+};
 
-const menuItems = [
+const primaryMenuItems = [
+    {
+        label: "Willkommen",
+        link: {
+            href: "/",
+        },
+    },
+    {
+        label: "Kategorien",
+        link: {
+            href: "/kategorien",
+        },
+    },
+    {
+        label: "Stichwortsuche",
+        link: {
+            href: "/stichwortsuche",
+        },
+    },
+    {
+        label: "Weitere Informationen",
+        children: [
+            {
+                label: "Filtern nach Aufbewahrungsorten",
+                link: {
+                    href: "/aufbewahrungsorte",
+                },
+            },
+            {
+                label: "Vollständige Materialliste des DiZ",
+                link: {
+                    href: "/materialliste",
+                },
+            },
+            {
+                label: "Signatursuche",
+                link: {
+                    href: "/signatursuche",
+                },
+            },
+        ],
+    },
+];
+
+const tertiaryMenuItems = [
     {
         label: "Didaktisches Zentrum",
         link: {

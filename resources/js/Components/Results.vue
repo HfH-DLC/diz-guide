@@ -4,8 +4,8 @@
             <strong class="font-bold">{{ results.length }}</strong>
             Resultate
         </h2>
-        <div>
-            <table class="w-full">
+        <div class="hfh-content">
+            <table class="w-full hyphens-auto">
                 <thead>
                     <tr>
                         <th>Kategorie</th>
@@ -42,7 +42,7 @@
                                 >Aufbewahrungsort</span
                             >
                             <button
-                                class="text-thunderbird-red hover:underline"
+                                class="text-left text-thunderbird-red hover:underline"
                                 @click="openDialog(result)"
                             >
                                 {{ result.location.name }}
@@ -109,20 +109,6 @@ const getCategoryString = (item: ItemData) => {
 </script>
 
 <style scoped>
-table {
-    border-collapse: collapse;
-}
-
-th {
-    text-align: left;
-}
-
-th,
-td {
-    border: 1px solid;
-    padding: 1rem;
-}
-
 td .hfh-label {
     display: none;
 }

@@ -13,7 +13,7 @@ use App\Models\MediaType;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class ItemController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,9 +21,6 @@ class ItemController extends Controller
     public function index(Request $request)
     {
         $validated = $request->validate([
-            'search' => ['nullable', 'string'],
-            'locationIds' =>  ['nullable', 'array'],
-            'locationIds.*' => ['numeric', 'integer'],
             'mediaTypeIds' => ['nullable', 'array'],
             'mediaTypeIds.*' => ['numeric', 'integer'],
             'categoryIds' =>  ['nullable', 'array'],
@@ -31,28 +28,31 @@ class ItemController extends Controller
         ]);
 
         $query = Item::query();
-        if (isset($validated['search'])) {
-            $search = $validated['search'];
-            $query->where('topic', 'like', "%$search%");
-        }
+
+        $categoryIds = [];
+        $mediaTypeIds = [];
+
         if (isset($validated['categoryIds'])) {
-            $query->where(function ($query) use ($validated) {
-                $query->whereIn('category_id', $validated['categoryIds'])->orWhere('category_id', null);
-            });
-        }
-        if (isset($validated['locationIds'])) {
-            $query->whereIn('location_id', $validated['locationIds']);
+            $categoryIds = $validated['categoryIds'];
         }
         if (isset($validated['mediaTypeIds'])) {
-            $query->whereIn('media_type_id', $validated['mediaTypeIds']);
+            $mediaTypeIds = $validated['mediaTypeIds'];
         }
 
-        $items = $query->with('category.parent')->get();
+        $query->where(function ($query) use ($categoryIds) {
+            $query->whereIn('category_id', $categoryIds)->orWhere('category_id', null);
+        });
+        $query->whereIn('media_type_id', $mediaTypeIds);
 
-        return Inertia::render("Items", [
+        $items = [];
+
+        if (isset($validated['categoryIds']) || isset($validated['mediaTypeIds'])) {
+            $items = $query->with(['category.parent', 'location', 'mediaType'])->get();
+        }
+
+        return Inertia::render("Categories", [
             'itemsResource' =>  ItemResource::collection($items),
-            'categoriesResource' => CategoryResource::collection(Category::where('parent_id', null)->orderBy('name')->get()),
-            'locationsResource' => LocationResource::collection(Location::orderBy('name')->get()),
+            'categoriesResource' => CategoryResource::collection(Category::where('parent_id', null)->with('children')->orderBy('name')->get()),
             'mediaTypesResource' => MediaTypeResource::collection(MediaType::orderBy('name')->get()),
         ]);
     }

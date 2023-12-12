@@ -18,7 +18,7 @@ class CategoryResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'parent' => $this->whenLoaded('parent', fn () => new CategoryResource($this->parent)),
-            'children' => CategoryResource::collection($this->children()->orderBy('name')->get()),
+            'children' => $this->whenLoaded('children', fn () => CategoryResource::collection($this->children()->orderBy('name')->get())),
         ];
     }
 }
