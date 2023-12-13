@@ -1,18 +1,15 @@
 <template>
-    <header>
-        <HfhHeader
-            :primaryItems="primaryMenuItems"
-            :tertiaryItems="tertiaryMenuItems"
-        ></HfhHeader>
-    </header>
-    <main class="mx-4 xl:max-w-container xl:mx-auto pb-20 mt-3 lg:mt-20">
-        <p>
-            Wählen Sie Kategorien aus und klicken Sie auf Suchen. Unter Sprache
-            hat es weitere Kategorien.
-        </p>
+    <div>
+        <div class="hfh-content">
+            <h1>Kategorien</h1>
+            <p>
+                Wählen Sie Kategorien aus und klicken Sie auf Suchen. Unter
+                Sprache hat es weitere Kategorien.
+            </p>
+        </div>
         <form
             @submit.prevent="search"
-            class="mt-8 bg-fantasy-light w-full pt-6 pb-6 pl-10 pr-5"
+            class="bg-fantasy-light w-full pt-6 pb-6 pl-10 pr-5"
         >
             <div class="flex flex-wrap gap-x-12 gap-y-4">
                 <div class="hfh-label flex-shrink-0">Suchen nach</div>
@@ -80,64 +77,11 @@
             <LoadingIndicator v-if="loading" class="mx-auto" />
             <Results v-else-if="displayResults" :results="items"></Results>
         </div>
-    </main>
-    <footer>
-        <HfhFooter>
-            <template #tagline
-                ><p>
-                    wissenschaftsbasiert, praxisorientiert, breit verankert
-                </p></template
-            >
-            <template #contact-address
-                ><p>
-                    Schaffhauserstrasse 239<br />Postfach 5850<br />CH-8050
-                    Zürich
-                </p></template
-            >
-            <template #contact-other>
-                <p>T +41 44 317 11 11</p>
-                <p><a href="mailto:info@hfh.ch">info@hfh.ch</a></p>
-            </template>
-            <template #socials>
-                <HfhSocialBlock
-                    icon="facebook"
-                    href="https://www.facebook.com/hfh.edu"
-                />
-                <HfhSocialBlock
-                    icon="youtube"
-                    href="https://www.youtube.com/user/hfhzuerich"
-                />
-                <HfhSocialBlock
-                    icon="linkedin"
-                    href="https://www.linkedin.com/company/hfh.edu"
-                />
-                <HfhSocialBlock
-                    icon="instagram"
-                    href="https://www.instagram.com/hfh_edu/"
-                />
-                <HfhSocialBlock
-                    icon="twitter"
-                    href="https://twitter.com/hfh_edu"
-                />
-                <HfhSocialBlock
-                    icon="issuu"
-                    href="https://issuu.com/hochschule_fuer_heilpaedagogik"
-                />
-            </template>
-            <template #copyright
-                >© Copyright {{ new Date().getFullYear() }} HfH</template
-            >
-        </HfhFooter>
-    </footer>
+    </div>
 </template>
 
 <script setup lang="ts">
-import {
-    HfhHeader,
-    HfhFooter,
-    HfhCheckbox,
-    HfhButton,
-} from "@hfh-dlc/hfh-styleguide";
+import { HfhCheckbox, HfhButton } from "@hfh-dlc/hfh-styleguide";
 import LoadingIndicator from "../Components/LoadingIndicator.vue";
 import Results from "../Components/Results.vue";
 import { PropType, Ref, computed, ref } from "vue";
@@ -291,7 +235,7 @@ const search = () => {
     if (errors.value.length > 0) {
         return;
     }
-    router.get("/kategorien", filter.value, {
+    router.get("/kategoriesuche", filter.value, {
         preserveState: false,
         preserveScroll: true,
         replace: true,
@@ -300,7 +244,7 @@ const search = () => {
 
 const reset = () => {
     router.get(
-        "/kategorien",
+        "/kategoriesuche",
         {},
         {
             preserveState: false,
@@ -309,61 +253,6 @@ const reset = () => {
         }
     );
 };
-
-const primaryMenuItems = [
-    {
-        label: "Willkommen",
-        link: {
-            href: "/",
-        },
-    },
-    {
-        label: "Kategorien",
-        link: {
-            href: "/kategorien",
-        },
-    },
-    {
-        label: "Stichwortsuche",
-        link: {
-            href: "/stichwortsuche",
-        },
-    },
-    {
-        label: "Weitere Informationen",
-        children: [
-            {
-                label: "Filtern nach Aufbewahrungsorten",
-                link: {
-                    href: "/aufbewahrungsorte",
-                },
-            },
-            {
-                label: "Vollständige Materialliste des DiZ",
-                link: {
-                    href: "/materialliste",
-                },
-            },
-            {
-                label: "Signatursuche",
-                link: {
-                    href: "/signatursuche",
-                },
-            },
-        ],
-    },
-];
-
-const tertiaryMenuItems = [
-    {
-        label: "Didaktisches Zentrum",
-        link: {
-            href: "https://www.hfh.ch/services/didaktisches-zentrum",
-            target: "_blank",
-        },
-    },
-    { label: "hfh.ch", link: { href: "https://hfh.ch", target: "_blank" } },
-];
 
 const loading = ref(false);
 </script>

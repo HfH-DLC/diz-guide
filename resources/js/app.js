@@ -3,6 +3,7 @@ import "./bootstrap";
 import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/vue3";
 import AdminLayout from "./Layouts/AdminLayout.vue";
+import DefaultLayout from "./Layouts/DefaultLayout.vue";
 
 createInertiaApp({
     resolve: (name) => {
@@ -10,6 +11,8 @@ createInertiaApp({
         let page = pages[`./Pages/${name}.vue`];
         if (name.startsWith("Admin/")) {
             page.default.layout = page.default.layout || AdminLayout;
+        } else {
+            page.default.layout = page.default.layout || DefaultLayout;
         }
         return page;
     },

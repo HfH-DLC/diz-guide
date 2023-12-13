@@ -4,21 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ItemResource;
-use App\Http\Resources\LocationResource;
+
 use App\Http\Resources\MediaTypeResource;
 use App\Models\Category;
 use App\Models\Item;
-use App\Models\Location;
 use App\Models\MediaType;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
+    public function show(Request $request)
     {
         $validated = $request->validate([
             'mediaTypeIds' => ['nullable', 'array'],
@@ -48,6 +44,12 @@ class CategoryController extends Controller
 
         if (isset($validated['categoryIds']) || isset($validated['mediaTypeIds'])) {
             $items = $query->with(['category.parent', 'location', 'mediaType'])->get();
+            $items  = $items->sortBy(function ($item) {
+                if ($item->category) {
+                    return $item->category->name;
+                }
+                return "";
+            });
         }
 
         return Inertia::render("Categories", [

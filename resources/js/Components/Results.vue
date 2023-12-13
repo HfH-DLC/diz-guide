@@ -95,11 +95,11 @@ const openDialog = (result: ItemData) => {
 
 const getCategoryString = (item: ItemData) => {
     let categoryString = "";
-    if (item.category?.parent) {
-        categoryString = item.category?.parent?.name + ", ";
-    }
     if (item.category) {
         categoryString += item.category.name;
+    }
+    if (item.category?.parent) {
+        categoryString += ", " + item.category?.parent?.name;
     }
     if (categoryString === "") {
         categoryString = "-";
