@@ -103,7 +103,7 @@ const reset = () => {
         {},
         {
             preserveState: false,
-            preserveScroll: false,
+            preserveScroll: true,
             replace: true,
         }
     );
