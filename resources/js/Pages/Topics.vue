@@ -5,7 +5,7 @@
             <p>
                 Unsere Sammlung deckt über 150 Fachthemen ab. Einfach die
                 Stichwortsuche verwenden, oder ohne Stichwort suchen, um die
-                gesammte Themenliste zu sehen.
+                gesamte Themenliste zu sehen.
             </p>
         </div>
         <div class="mt-8 bg-fantasy-light w-full pt-6 pb-6 pl-10 pr-5 flex">
