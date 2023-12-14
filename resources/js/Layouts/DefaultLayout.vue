@@ -3,7 +3,6 @@
         <HfhHeader
             :primaryItems="primaryMenuItems"
             :tertiaryItems="tertiaryMenuItems"
-            :linkComponent="Link"
             :currentItem="currentItem"
             :key="new Date().toTimeString()"
         >
@@ -112,6 +111,20 @@ const primaryMenuItems = [
                 label: "Suche nach Aufbewahrungsorten",
                 link: {
                     href: "/ortsuche",
+                },
+            },
+            {
+                label: "Didaktisches Zentrum",
+                link: {
+                    href: "https://www.hfh.ch/services/didaktisches-zentrum",
+                    target: "_blank",
+                },
+            },
+            {
+                label: "Virtual Tour TLP & DiZ",
+                link: {
+                    href: "https://www.hfh.ch/services/didaktisches-zentrum#virtualtour",
+                    target: "_blank",
                 },
             },
         ],
