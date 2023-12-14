@@ -31,8 +31,8 @@
             ></component>
             <span class="hfh-sr-only">{{
                 displaySubCategories
-                    ? "Unterkategorien anzeigen"
-                    : "Unterkategorien ausblenden"
+                    ? "Unterkategorien ausblenden"
+                    : "Unterkategorien anzeigen"
             }}</span>
         </button>
     </div>
