@@ -93,10 +93,9 @@ import type {
     NestedCheckboxOption,
     CheckboxOptionWithChildren,
 } from "../types";
-import { HfhSocialBlock } from "@hfh-dlc/hfh-styleguide";
 import { router } from "@inertiajs/vue3";
 import TriStateCheckbox from "@/Components/TriStateCheckbox.vue";
-import { CheckboxOption } from "@hfh-dlc/hfh-styleguide/types/types";
+import type { CheckboxOption } from "@hfh-dlc/hfh-styleguide/types";
 
 const props = defineProps({
     itemsResource: {
