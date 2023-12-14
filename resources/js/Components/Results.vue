@@ -60,7 +60,7 @@
         <div v-if="selectedLocation">
             <div class="flex items-start justify-between gap-x-8">
                 <h2 class="text-2xl mb-4">{{ selectedLocation.label }}</h2>
-                <button class="block ml-auto w-5" @click="dialog.close">
+                <button class="block ml-auto w-5" @click="closeDialog">
                     <XMarkIcon class="w-5" />
                 </button>
             </div>
@@ -91,6 +91,11 @@ const selectedLocation: Ref<LocationData | undefined> = ref();
 const openDialog = (result: ItemData) => {
     selectedLocation.value = result.location;
     dialog.value.showModal();
+};
+
+const closeDialog = () => {
+    selectedLocation.value = undefined;
+    dialog.value.close();
 };
 
 const getCategoryString = (item: ItemData) => {
