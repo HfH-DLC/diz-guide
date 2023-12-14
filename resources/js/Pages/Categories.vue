@@ -3,8 +3,15 @@
         <div class="hfh-content">
             <h1>Kategorien</h1>
             <p>
-                Wählen Sie Kategorien aus und klicken Sie auf Suchen. Unter
-                Sprache hat es weitere Kategorien.
+                Wählen Sie Kategorien aus und klicken Sie auf Suchen. Unter der
+                Rubrik Sprache gibt es weitere Kategorien, zu denen Sie
+                gelangen, indem Sie auf das
+                <span class="hfh-sr-only">Pfeil-Icon</span>
+                <ChevronRightIcon
+                    class="w-5 mb-1 inline-block"
+                    aria-hidden
+                ></ChevronRightIcon>
+                klicken.
             </p>
         </div>
         <form
@@ -96,6 +103,7 @@ import type {
 import { router } from "@inertiajs/vue3";
 import TriStateCheckbox from "@/Components/TriStateCheckbox.vue";
 import type { CheckboxOption } from "@hfh-dlc/hfh-styleguide/types";
+import { ChevronRightIcon } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
     itemsResource: {
