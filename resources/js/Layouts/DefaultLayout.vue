@@ -3,6 +3,9 @@
         <HfhHeader
             :primaryItems="primaryMenuItems"
             :tertiaryItems="tertiaryMenuItems"
+            :linkComponent="Link"
+            :currentItem="currentItem"
+            :key="new Date().toTimeString()"
         ></HfhHeader>
     </header>
     <main class="mx-4 xl:max-w-container xl:mx-auto pb-20 mt-3 lg:mt-20">
@@ -61,6 +64,8 @@
 <script setup lang="ts">
 import { HfhHeader, HfhFooter } from "@hfh-dlc/hfh-styleguide";
 import { HfhSocialBlock } from "@hfh-dlc/hfh-styleguide";
+import { Link, usePage } from "@inertiajs/vue3";
+import { computed } from "vue";
 
 const primaryMenuItems = [
     {
@@ -105,6 +110,10 @@ const primaryMenuItems = [
         ],
     },
 ];
+
+const currentItem = computed(() => {
+    return usePage().url;
+});
 
 const tertiaryMenuItems = [
     {
