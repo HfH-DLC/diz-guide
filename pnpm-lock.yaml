@@ -9,8 +9,8 @@ dependencies:
     specifier: ^2.0.18
     version: 2.0.18(vue@3.3.4)
   '@hfh-dlc/hfh-styleguide':
-    specifier: ^1.1.33
-    version: 1.1.33(vue@3.3.4)
+    specifier: ^1.1.34
+    version: 1.1.34(vue@3.3.4)
   '@inertiajs/inertia':
     specifier: ^0.11.1
     version: 0.11.1
@@ -286,8 +286,8 @@ packages:
       vue: 3.3.4
     dev: false
 
-  /@hfh-dlc/hfh-styleguide@1.1.33(vue@3.3.4):
-    resolution: {integrity: sha512-WvqtpfMzp0fcnxvFEEHWFsPpDYuSS0mHk5BTdE67EkC+LUV/VMhAKL8du/QL7wjOj6ISxIdrV7uRUgdY5YNNmQ==, tarball: https://npm.pkg.github.com/download/@hfh-dlc/hfh-styleguide/1.1.33/0b1e0dbb977ecc622cd6c2ea4f18d095d0b2b0c3}
+  /@hfh-dlc/hfh-styleguide@1.1.34(vue@3.3.4):
+    resolution: {integrity: sha512-/ups3QNzCaL4WWon8PcEKXrSbhQ2cFoa3tyNNf280VTzNyaWkaH4tffyjW08CbH3KtSzNc9hzn8AHgXKzLNZ4A==, tarball: https://npm.pkg.github.com/download/@hfh-dlc/hfh-styleguide/1.1.34/7248f43e4afdbf49dd34fecd4a552feeacce8224}
     peerDependencies:
       vue: ^3.0.4
     dependencies:
