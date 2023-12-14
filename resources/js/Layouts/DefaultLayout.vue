@@ -6,7 +6,14 @@
             :linkComponent="Link"
             :currentItem="currentItem"
             :key="new Date().toTimeString()"
-        ></HfhHeader>
+        >
+            <template #logo-desktop
+                ><Link href="/" class="inline-flex gap-x-4 items-center"
+                    ><HfhLogo></HfhLogo>
+                    <div class="text-2xl mb-[3px]">DiZ-Guide</div></Link
+                ></template
+            >
+        </HfhHeader>
     </header>
     <main class="mx-4 xl:max-w-container xl:mx-auto pb-20 mt-3 lg:mt-20">
         <slot></slot>
@@ -62,7 +69,7 @@
 </template>
 
 <script setup lang="ts">
-import { HfhHeader, HfhFooter } from "@hfh-dlc/hfh-styleguide";
+import { HfhHeader, HfhFooter, HfhLogo } from "@hfh-dlc/hfh-styleguide";
 import { HfhSocialBlock } from "@hfh-dlc/hfh-styleguide";
 import { Link, usePage } from "@inertiajs/vue3";
 import { computed } from "vue";
