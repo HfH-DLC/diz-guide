@@ -2,16 +2,22 @@
     <div>
         <div class="hfh-content">
             <h1>Signatursuche</h1>
-            <!-- <p>
-                Unsere Sammlung deckt über 150 Fachthemen ab. Einfach die
-                Stichwortsuche verwenden, oder ohne Stichwort suchen, um die
-                gesammte Themenliste zu sehen.
-            </p> -->
+            <p>
+                Mit der Signatursuche können sie die Aufbewahrungsorte der
+                Artikel aus der vollständigen Materialliste des DiZ suchen.
+                Tippen sie die vollständige Signatur, oder den ersten Teil davon
+                ein, zum Beispiel <strong>1.4.2.3</strong> oder
+                <strong>1.4.2.3 - 006</strong>.
+            </p>
         </div>
         <div
             class="mt-8 bg-fantasy-light w-full pt-6 pb-6 pl-10 pr-5 flex justify-center"
         >
-            <Search @search="search" :searchText="searchText"></Search>
+            <Search
+                label="Signatursuche"
+                @search="search"
+                :searchText="searchText"
+            ></Search>
         </div>
         <div class="mt-16 w-full">
             <LoadingIndicator v-if="loading" class="mx-auto" />

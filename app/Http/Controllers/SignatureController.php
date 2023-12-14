@@ -22,7 +22,14 @@ class SignatureController extends Controller
             $query = Item::query();
             if (isset($validated['search'])) {
                 $search = $validated['search'];
-                $query->where('signature', 'like', "$search%");
+                $pattern = '/^((\d+\.)+\d+)/';
+                preg_match($pattern, $search, $matches);
+                if (count($matches) > 0) {
+                    $searchTerm = $matches[1];
+                } else {
+                    $searchTerm = $search;
+                }
+                $query->where('signature', 'like', "$searchTerm%");
             }
             $items = $query->with(['category.parent', 'location', 'mediaType'])->orderBy('signature')->get();
         }

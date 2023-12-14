@@ -6,7 +6,7 @@
                 id="search"
                 type="search"
                 placeholder="Suchbegriff"
-                label="Volltextsuche"
+                :label="label"
             />
             <HfhButton type="submit" icon="search" :animated="false"
                 >Suchen</HfhButton
@@ -23,6 +23,10 @@ const props = defineProps({
     searchText: {
         type: String,
         default: "",
+    },
+    label: {
+        type: String,
+        required: true,
     },
 });
 const inputValue = ref(props.searchText);
