@@ -45,10 +45,8 @@ class CategoryController extends Controller
         if (isset($validated['categoryIds']) || isset($validated['mediaTypeIds'])) {
             $items = $query->with(['category.parent', 'location', 'mediaType'])->get();
             $items  = $items->sortBy(function ($item) {
-                if ($item->category) {
-                    return $item->category->name;
-                }
-                return "";
+                //If no category exists return the highest point in unicode range to ensure those items beign sorted last.
+                return $item->category ? $item->category->name : "\u{10FFFF}";
             });
         }
 
