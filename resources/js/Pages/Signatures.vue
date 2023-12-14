@@ -10,12 +10,11 @@
                 <strong>1.4.2.3 - 006</strong>.
             </p>
         </div>
-        <div
-            class="mt-8 bg-fantasy-light w-full pt-6 pb-6 pl-10 pr-5 flex justify-center"
-        >
+        <div class="mt-8 bg-fantasy-light w-full pt-6 pb-6 pl-10 pr-5 flex">
             <Search
                 label="Signatursuche"
                 @search="search"
+                @reset="reset"
                 :searchText="searchText"
             ></Search>
         </div>
@@ -52,6 +51,18 @@ const search = (value: string) => {
     router.get(
         "/signatursuche",
         { search: searchText.value },
+        {
+            preserveState: false,
+            preserveScroll: true,
+            replace: true,
+        }
+    );
+};
+
+const reset = () => {
+    router.get(
+        "/signatursuche",
+        {},
         {
             preserveState: false,
             preserveScroll: true,

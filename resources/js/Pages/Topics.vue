@@ -8,10 +8,13 @@
                 gesammte Themenliste zu sehen.
             </p>
         </div>
-        <div
-            class="mt-8 bg-fantasy-light w-full pt-6 pb-6 pl-10 pr-5 flex justify-center"
-        >
-            <Search @search="search" :searchText="searchText"></Search>
+        <div class="mt-8 bg-fantasy-light w-full pt-6 pb-6 pl-10 pr-5 flex">
+            <Search
+                label="Stichwortsuche nach Fachthema"
+                @search="search"
+                @reset="reset"
+                :searchText="searchText"
+            ></Search>
         </div>
         <div class="mt-16 w-full">
             <LoadingIndicator v-if="loading" class="mx-auto" />
@@ -46,6 +49,18 @@ const search = (value: string) => {
     router.get(
         "/stichwortsuche",
         { search: searchText.value },
+        {
+            preserveState: false,
+            preserveScroll: true,
+            replace: true,
+        }
+    );
+};
+
+const reset = () => {
+    router.get(
+        "/stichwortsuche",
+        {},
         {
             preserveState: false,
             preserveScroll: true,

@@ -67,8 +67,8 @@
                 </li>
             </ul>
             <div class="mt-8 flex flex-wrap gap-x-8 gap-y-4">
-                <HfhButton type="submit" :animated="true">Suchen</HfhButton>
-                <HfhButton :animated="true" :primary="false" @click="reset"
+                <HfhButton type="submit" icon="search">Suchen</HfhButton>
+                <HfhButton :primary="false" @click="reset"
                     >Zurücksetzen</HfhButton
                 >
             </div>

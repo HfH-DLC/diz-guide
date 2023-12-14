@@ -1,6 +1,6 @@
 <template>
     <form @submit.prevent="search" class="relative w-full max-w-[60ch]">
-        <div class="flex items-end gap-4">
+        <div>
             <HfhInput
                 v-model="inputValue"
                 id="search"
@@ -8,9 +8,12 @@
                 placeholder="Suchbegriff"
                 :label="label"
             />
-            <HfhButton type="submit" icon="search" :animated="false"
-                >Suchen</HfhButton
-            >
+            <div class="mt-8 flex flex-wrap gap-x-8 gap-y-4">
+                <HfhButton type="submit" icon="search">Suchen</HfhButton>
+                <HfhButton :primary="false" @click="reset"
+                    >Zurücksetzen</HfhButton
+                >
+            </div>
         </div>
     </form>
 </template>
@@ -18,7 +21,7 @@
 <script setup lang="ts">
 import { HfhButton, HfhInput } from "@hfh-dlc/hfh-styleguide";
 import { ref, watch } from "vue";
-const emit = defineEmits(["search"]);
+const emit = defineEmits(["search", "reset"]);
 const props = defineProps({
     searchText: {
         type: String,
@@ -40,6 +43,10 @@ watch(
 
 const search = () => {
     emit("search", inputValue.value);
+};
+
+const reset = () => {
+    emit("reset");
 };
 </script>
 
