@@ -7,10 +7,11 @@
             class="w-full h-auto max-w-full block mb-16"
         />
         <p>
-            Entdecken Sie die vielfältige Sammlung an Materialien des DiZ für
-            Diagnose, Therapie, Beratung und Prävention. Dieser Guide hilft
-            Ihnen, sich in unseren Regalen, Schränken und Schubladen
-            zurechtzufinden. Eine Suche nach einzelnen Medien ist nicht möglich.
+            Entdecken Sie die vielfältige Sammlung an Materialien des
+            Didaktischen Zentrums DiZ für Diagnose, Therapie, Beratung und
+            Prävention. Dieser Guide hilft Ihnen, sich in unseren Regalen,
+            Schränken und Schubladen zurechtzufinden. Eine Suche nach einzelnen
+            Medien ist nicht möglich.
         </p>
         <p>
             Nutzen Sie das <Link href="/kategoriesuche">Kategorienmenü</Link>,
