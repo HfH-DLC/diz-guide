@@ -68,8 +68,12 @@
 </template>
 
 <script setup lang="ts">
-import { HfhHeader, HfhFooter, HfhLogo } from "@hfh-dlc/hfh-styleguide";
-import { HfhSocialBlock } from "@hfh-dlc/hfh-styleguide";
+import {
+    HfhHeader,
+    HfhFooter,
+    HfhLogo,
+    HfhSocialBlock,
+} from "@hfh-dlc/hfh-styleguide";
 import { Link, usePage } from "@inertiajs/vue3";
 import { computed } from "vue";
 
@@ -78,18 +82,21 @@ const primaryMenuItems = [
         label: "Willkommen",
         link: {
             href: "/",
+            component: Link,
         },
     },
     {
         label: "Kategorien",
         link: {
             href: "/kategoriesuche",
+            component: Link,
         },
     },
     {
         label: "Stichwortsuche",
         link: {
             href: "/stichwortsuche",
+            component: Link,
         },
     },
     {
@@ -99,18 +106,21 @@ const primaryMenuItems = [
                 label: "Vollständige Materialliste des DiZ",
                 link: {
                     href: "/materialliste",
+                    component: Link,
                 },
             },
             {
                 label: "Signatursuche",
                 link: {
                     href: "/signatursuche",
+                    component: Link,
                 },
             },
             {
                 label: "Suche nach Aufbewahrungsorten",
                 link: {
                     href: "/ortsuche",
+                    component: Link,
                 },
             },
             {
