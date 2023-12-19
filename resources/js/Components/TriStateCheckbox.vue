@@ -95,7 +95,6 @@ const model = computed({
         return props.modelValue;
     },
     set(newValue: Array<string>) {
-        console.log("model.set", newValue);
         emit("update:modelValue", newValue);
     },
 });
