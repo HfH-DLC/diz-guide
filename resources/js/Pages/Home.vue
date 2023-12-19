@@ -24,15 +24,38 @@
             ermöglicht Ihnen eine Freitextsuche über mehr als 150 Fachthemen.
         </p>
         <p>
-            Unter <strong>Weitere Informationen</strong> finden Sie die
-            vollständige Materialliste des DiZ mit über 3500 Büchern, Spielen,
-            Tests und Filmen.
+            Unter
+            <button
+                @click="displayMenu"
+                class="text-thunderbird-red font-bold hover:underline focus:underline"
+            >
+                Weitere Informationen
+            </button>
+            finden Sie die vollständige Materialliste des DiZ mit über 3500
+            Büchern, Spielen, Tests und Filmen.
         </p>
     </div>
 </template>
 
 <script setup lang="ts">
 import { Link } from "@inertiajs/vue3";
+import { menuState } from "@/menuState";
+import { nextTick } from "vue";
+
+const displayMenu = () => {
+    if (
+        menuState.value.primaryItems &&
+        menuState.value.primaryItems.length === 4
+    ) {
+        menuState.value.primaryItems![3].open = true;
+        nextTick(() => {
+            const button = document.querySelector<HTMLButtonElement>(
+                ".hfh-menu__entry--open"
+            );
+            button?.focus();
+        });
+    }
+};
 </script>
 
 <style scoped></style>

@@ -1,10 +1,10 @@
 <template>
     <header>
         <HfhHeader
-            :primaryItems="primaryMenuItems"
-            :tertiaryItems="tertiaryMenuItems"
+            :primaryItems="menuState.primaryItems"
+            :tertiaryItems="menuState.tertiaryItems"
+            @updateItems="onUpdateItems"
             :currentItem="currentItem"
-            :key="new Date().toTimeString()"
         >
             <template #logo-desktop
                 ><Link href="/" class="inline-flex gap-x-4 items-center"
@@ -74,87 +74,24 @@ import {
     HfhLogo,
     HfhSocialBlock,
 } from "@hfh-dlc/hfh-styleguide";
-import { Link, usePage } from "@inertiajs/vue3";
+import type { MenuItem } from "@hfh-dlc/hfh-styleguide/types";
+import { usePage, Link } from "@inertiajs/vue3";
 import { computed } from "vue";
-
-const primaryMenuItems = [
-    {
-        label: "Willkommen",
-        link: {
-            href: "/",
-            component: Link,
-        },
-    },
-    {
-        label: "Kategorien",
-        link: {
-            href: "/kategoriesuche",
-            component: Link,
-        },
-    },
-    {
-        label: "Stichwortsuche",
-        link: {
-            href: "/stichwortsuche",
-            component: Link,
-        },
-    },
-    {
-        label: "Weitere Informationen",
-        children: [
-            {
-                label: "Vollständige Materialliste des DiZ",
-                link: {
-                    href: "/materialliste",
-                    component: Link,
-                },
-            },
-            {
-                label: "Signatursuche",
-                link: {
-                    href: "/signatursuche",
-                    component: Link,
-                },
-            },
-            {
-                label: "Suche nach Aufbewahrungsorten",
-                link: {
-                    href: "/ortsuche",
-                    component: Link,
-                },
-            },
-            {
-                label: "Didaktisches Zentrum",
-                link: {
-                    href: "https://www.hfh.ch/services/didaktisches-zentrum",
-                    target: "_blank",
-                },
-            },
-            {
-                label: "Virtual Tour TLP & DiZ",
-                link: {
-                    href: "https://www.hfh.ch/services/didaktisches-zentrum#virtualtour",
-                    target: "_blank",
-                },
-            },
-        ],
-    },
-];
+import { menuState } from "@/menuState";
 
 const currentItem = computed(() => {
     return usePage().url;
 });
 
-const tertiaryMenuItems = [
-    {
-        label: "Didaktisches Zentrum",
-        link: {
-            href: "https://www.hfh.ch/services/didaktisches-zentrum",
-            target: "_blank",
-        },
-    },
-    { label: "hfh.ch", link: { href: "https://hfh.ch", target: "_blank" } },
-];
+const onUpdateItems = (items: {
+    primaryItems: Array<MenuItem>;
+    secondaryItems: Array<MenuItem>;
+    tertiaryItems: Array<MenuItem>;
+}) => {
+    menuState.value.primaryItems = items.primaryItems;
+    menuState.value.secondaryItems = items.secondaryItems;
+    menuState.value.tertiaryItems = items.tertiaryItems;
+};
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped lang="sass"></style>
