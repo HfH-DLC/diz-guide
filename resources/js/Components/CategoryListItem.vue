@@ -5,7 +5,10 @@
             class="hover:text-thunderbird-red"
             >{{ category.name }}</Link
         >
-        <ul v-if="category.children.length > 0" class="ml-6 mb-2">
+        <ul
+            v-if="category.children && category.children.length > 0"
+            class="ml-6 mb-2"
+        >
             <CategoryListItem
                 v-for="child in category.children"
                 :category="child"

@@ -16,7 +16,7 @@ class AdminCategoryController extends Controller
     public function index()
     {
         return Inertia::render('Admin/CategoryIndex', [
-            'categoriesResource' => CategoryResource::collection(Category::where('parent_id', null)->orderBy('name')->get())
+            'categoriesResource' => CategoryResource::collection(Category::where('parent_id', null)->with('children')->orderBy('name')->get())
         ]);
     }
 
